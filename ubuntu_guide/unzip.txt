@@ -1,0 +1,6 @@
+tar -xvf file.jar
+tar -xzvf file.jar.gz
+tar -xjvf file.tar.bz2
+tar -xZvf file.tar.Z
+unrar e file.rar
+unzip file.zip

@@ -1,0 +1,150 @@
+How to Update Linux Kernel In Ubuntu
+
+https://phoenixnap.com/
+
+
+Introduction
+
+The Linux kernel is like the central core of the operating system. It works as sort of a mediator, providing an interface between software applications and computer hardware.
+
+The Linux kernel is the foundation on which all the different types of Linux, operate. It is Open Source software – anyone can decompile, examine, and modify the code.
+
+As technology progresses, developers discover patches and updates to the Linux kernel. These patches can improve security, add functionality, or even improve the speed at which the operating system functions.
+
+If you’re running a Linux operating system (like Ubuntu), it’s a good idea to check and update the kernel regularly.
+
+
+Prerequisites
+
+A server running Ubuntu Linux
+Access to the Terminal (CTRL-ALT-T or Applications menu > Accessories > Terminal)
+A user account with sudo privileges
+The apt tool, built into Ubuntu
+The Update Manager, built into Ubuntu (optional)
+
+
+Tutorial on Updating Ubuntu Kernel
+Option A: Use the System Update Process
+Step 1: Check Your Current Kernel Version
+At a terminal window, type:
+		uname –sr
+The terminal returns an output similar to:
+		Linux 5.11.0-27-generic
+The first two digits (in this case, 5.11) are the overall kernel package. The third digit is the version, and the fourth digit shows you the level of patches and fixes.
+For a full list of uname commands, enter: uname --help
+
+Step 2: Update the Repositories
+At a terminal, type:
+
+		sudo apt-get update
+
+This command refreshes your local list of software, making a note of any newer revisions and updates. If there’s a newer version of the kernel, the command will find it and mark it for download and installation.
+
+Step 3: Run the upgrade
+While still in the terminal, type:
+
+		sudo apt-get dist-upgrade		
+	-------------------error----------------------------------------
+	You may encounter the following errors:
+		E: Could not get lock /var/lib/dpkg/lock-frontend
+		E: Unable to acquire the dpkg frontend lock (/var/lib/dpkg/lock-frontend), is another process using it?		
+	--------------------solution-------------------------------------------	
+	try to find the process using it and complete it.
+	or, if you're on a new machine, you can reboot the kernel.
+
+The “dist-upgrade” switch asks Ubuntu to handle any dependencies intelligently. That is, if a particular software package is dependent on another software package to run, this command will make sure that the second package is upgraded before upgrading the first one.
+
+This method is a safe way to upgrade your Ubuntu Linux kernel. The kernel updates accessible through this utility have been tested and verified to work with your version of Ubuntu.
+
+
+*********************************************************
+*********************************************************
+*********************************************************
+Option B: Use the System Update Process to Force a Kernal Upgrade
+There are instances in which a newer kernel has been released but not thoroughly tested with your version of Ubuntu. For example, you might be running Ubuntu 17.10 (Artful Aardvark), and you know that Ubuntu 18.04 (Bionic Beaver) is available.
+
+Updating the kernel in this way requires a more substantial process.
+
+Step 1: Back Up Your Important Files
+You’ve probably already done this, but it’s important enough that it’s worth repeating.
+
+Step 2: Use the Software Updater
+Launch the software updater by hitting the super key (the “windows” key on most keyboards), and search for Update Manager.
+
+The update manager will notify you if there are any updates needed. If you performed the steps in Part A, it should say your computer is up to date.
+
+Click the Settings button.
+
+A new window should open up with several tabs.
+
+Step 3: Configure the Software Updater
+Click the Updates tab.
+
+Tick the first three checkboxes, under “Install updates from:”
+
+Important security updates
+Recommended updates
+Unsupported updates
+Then, at the bottom of this tab, look for a drop-down labeled “Notify me of a new Ubuntu version:”
+
+Click that drop-down, and select:
+
+For long-term support versions (If you want to stick with tested and reliable versions with full support)
+For any new version (If you like playing with the latest-and-greatest, and don’t mind if things are a little buggy)
+Close this window, and then re-open it. It should offer the option to upgrade if there’s a new version out. (It usually takes a few days after release for the upgrade to become available, and for the server traffic to lighten up.)
+
+Step 4: Force the Upgrade
+If for some reason the system does not offer an upgrade, you can force it by opening a terminal and typing:
+
+update-manager –d
+
+The system should respond with a window showing release notes for the new kernel (and version) of Ubuntu.
+
+If everything looks good, click upgrade, and the process will proceed.
+
+
+*********************************************************
+*********************************************************
+*********************************************************
+Option C: Manually Update the Kernel (Advanced Procedure)
+If you just want to upgrade to the latest (untested) kernel available, and you’re aware of the risks, there’s a third procedure for selecting and installing a new kernel.
+
+Before performing this step, it’s worth checking your system configuration. Are you running any custom drivers (especially video drivers)? Any custom configurations or packages? Those may not be compatible with the new kernel.
+
+If you make a mistake and find that the new kernel is incompatible, a recovery option should be available. But it’s better to take precautions and prevent a problem than to try to fix one.
+
+It’s also a good idea to research the release notes for the kernel you want to install. Note the revision number and any features that you intend to work with.
+
+This process will use Ukuu, a graphical utility for updating the kernel. There are other methods, including manually downloading and installing the kernel, or even getting a copy of the source code and compiling it. Those methods are more complicated, and outside the scope of this guide.
+
+Step 1: Install Ukuu
+At the terminal, type the following (hit enter after each line):
+
+sudo apt-add-repository ppa:teejee2008/ppa
+
+sudo apt-get update
+
+sudo apt-get install ukuu
+
+The first command adds the TeeJeeTech repositories of open-source software for Linux to your basic repositories. The second command refreshes the database, so you’ve got a list of the latest revisions. The third command installs the Ukuu software.
+
+Step 2: Launch Ukuu
+At the terminal, type:
+
+sudo ukuu-gtk
+
+The Ukuu utility will launch and should display a list of the available Linux kernel versions.
+
+Step 3: Install the Kernel
+Select the kernel you wish to install, then click the “Install” button on the right-hand side.
+
+Step 4: Reboot the System
+Once the kernel finishes installing, reboot your system. Once you’re back into the operating system, you can relaunch Ukuu to verify the installation.
+
+Step 5: In Case of Failure
+If there’s a catastrophic problem, the GRUB, or boot utility, will keep a copy of the old kernel that you can select and boot into.
+
+On the boot screen, select Advanced options for Ubuntu – then select the previous kernel (identified by the revision number). There’s no need to use the “upstart” or “recovery mode” options.
+
+Step 6: Uninstalling the Kernel
+The Ukuu utility also offers the ability to remove old kernels on Ubuntu. Simply click the same kernel that you installed previously, and click Remove on the right-hand side.
